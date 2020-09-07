@@ -14,10 +14,12 @@ import com.example.recycleview.model.PostViewModel
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import kotlinx.android.synthetic.main.bottom_sheet.*
 
-class BottomSheetFragment() : BottomSheetDialogFragment() {
+class BottomSheetFragment(private val position: Int, private val listener : BottomSheetActionListener) : BottomSheetDialogFragment() {
 
-    var addTaskFragment = AddTaskFragment()
-    private val postViewModel: PostViewModel by viewModels()
+    interface BottomSheetActionListener{
+        fun onClickModify(position: Int)
+        fun onClickDelete(position: Int)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -30,18 +32,14 @@ class BottomSheetFragment() : BottomSheetDialogFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        var adapter = PostAdapter(
-            requireContext(),
-            Common.myMutableListOfPost
-        )
-
         modifyLine.setOnClickListener(){
-            val positionForEdit =
+            /*val positionForEdit =
                 Common.currentPosition
             Common.currentTitle = adapter.myListOfPosts()[Common.currentPosition].postTitle
             Common.currentBody = adapter.myListOfPosts()[Common.currentPosition].postBody
             Common.modify = true
-            changeFragment(positionForEdit)
+            changeFragment(positionForEdit)*/
+            listener.onClickModify(position)
             dismiss()
         }
 
@@ -51,27 +49,14 @@ class BottomSheetFragment() : BottomSheetDialogFragment() {
             deletingItemAlert.setTitle("Sei sicuro?")
             deletingItemAlert.setMessage("Vuoi cancellare questo post?")
             deletingItemAlert.setPositiveButton("Si") { _: DialogInterface, _: Int ->
-                postViewModel.delete(Common.myMutableListOfPost[dataPos].idPost)
+                /*postViewModel.delete(Common.myMutableListOfPost[dataPos].idPost)
                 adapter.myListOfPosts().removeAt(dataPos)
-                adapter.notifyDataSetChanged()
+                adapter.notifyDataSetChanged()*/
+                listener.onClickDelete(position)
             }
             deletingItemAlert.setNegativeButton("No") { _: DialogInterface, _: Int -> }
             deletingItemAlert.show()
             dismiss()
         }
     }
-
-    fun changeFragment(position:Int) {
-        transictionFragment()
-        addTaskFragment.editTask(position)
-    }
-
-    fun transictionFragment(){
-        this.requireActivity().supportFragmentManager.beginTransaction().apply {
-            replace(R.id.flFragment, AddTaskFragment())
-            addToBackStack(null)
-            commit()
-        }
-    }
-
 }

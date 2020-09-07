@@ -14,13 +14,18 @@ import kotlinx.android.synthetic.main.todo_line.view.*
 
 
 
-class PostAdapter(private val context: Context, private var postList: MutableList<PostsDB>) : RecyclerView.Adapter<PostAdapter.PostViewHolder>() {
+class PostAdapter(private var context: Context, private var postList: MutableList<PostsDB>) : RecyclerView.Adapter<PostAdapter.PostViewHolder>() {
+
+    interface AdapterClickListener{
+        fun showComments()
+        fun showBottomSheet(position: Int)
+    }
+
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PostViewHolder {
         var itemView = LayoutInflater.from(context).inflate(R.layout.todo_line, parent, false)
-        return PostViewHolder(
-            itemView
-        )
+        var listener: AdapterClickListener
+        return PostViewHolder(itemView, this)
     }
 
     override fun getItemCount(): Int {
@@ -32,7 +37,7 @@ class PostAdapter(private val context: Context, private var postList: MutableLis
         holder.description.text = postList[position].postBody
     }
 
-    class PostViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    class PostViewHolder(itemView: View, listener: AdapterClickListener) : RecyclerView.ViewHolder(itemView) {
         var title : TextView
         var description : TextView
 
@@ -40,18 +45,22 @@ class PostAdapter(private val context: Context, private var postList: MutableLis
             title = itemView.title
             description = itemView.description
             itemView.setOnClickListener{
-                Common.currentPosition = adapterPosition
+                listener.showComments()
+
+
+                /*Common.currentPosition = adapterPosition
                 val commentFragment =
                     CommentFragment()
                 (it.context as FragmentActivity).supportFragmentManager.beginTransaction().apply {
                     replace(R.id.flFragment, commentFragment)
                     addToBackStack(null)
                     commit()
-                }
+                }*/
             }
             itemView.setOnLongClickListener{
-                Common.currentPosition = adapterPosition
-                BottomSheetFragment().show((it.context as FragmentActivity).supportFragmentManager, "BottomSheetDialog")
+                listener.showBottomSheet(adapterPosition)
+                /*Common.currentPosition = adapterPosition
+                BottomSheetFragment().show((it.context as FragmentActivity).supportFragmentManager, "BottomSheetDialog")*/
                 return@setOnLongClickListener true
             }
         }

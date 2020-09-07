@@ -14,7 +14,7 @@ import com.example.recycleview.common.Common
 import com.example.recycleview.model.PostViewModel
 import kotlinx.android.synthetic.main.fragment_recycler.*
 
-class RecyclerFragment : Fragment(R.layout.fragment_recycler) {
+class RecyclerFragment : Fragment(R.layout.fragment_recycler), BottomSheetFragment.BottomSheetActionListener, PostAdapter.AdapterClickListener {
 
     private val postViewModel: PostViewModel by viewModels()
 
@@ -44,7 +44,6 @@ class RecyclerFragment : Fragment(R.layout.fragment_recycler) {
         postViewModel.getPostList()
 
         btnOpenNewTaskAdd.setOnClickListener {
-            Common.modify = false
             transictionFragment()
         }
     }
@@ -72,5 +71,25 @@ class RecyclerFragment : Fragment(R.layout.fragment_recycler) {
             addToBackStack(null)
             commit()
         }
+    }
+
+    override fun onClickModify(position: Int) {
+        transictionFragment()
+    }
+
+    override fun onClickDelete(position: Int) {
+        postViewModel.delete(position)
+    }
+
+    override fun showComments() {
+        this.requireActivity().supportFragmentManager.beginTransaction().apply {
+            replace(R.id.flFragment, CommentFragment())
+            addToBackStack(null)
+            commit()
+        }
+    }
+
+    override fun showBottomSheet(position: Int) {
+        BottomSheetFragment(position, this).show(this.requireActivity().supportFragmentManager, "BottomSheetDialog")
     }
 }
