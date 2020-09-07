@@ -46,13 +46,11 @@ class BottomSheetFragment() : BottomSheetDialogFragment() {
         }
 
         deleteLine.setOnClickListener{
-            //var recyclerFragment = RecyclerFragment()
             val deletingItemAlert = AlertDialog.Builder(context)
             val dataPos = Common.currentPosition
             deletingItemAlert.setTitle("Sei sicuro?")
             deletingItemAlert.setMessage("Vuoi cancellare questo post?")
             deletingItemAlert.setPositiveButton("Si") { _: DialogInterface, _: Int ->
-                //recyclerFragment.deleteReceiver(dataPos)
                 postViewModel.delete(Common.myMutableListOfPost[dataPos].idPost)
                 adapter.myListOfPosts().removeAt(dataPos)
                 adapter.notifyDataSetChanged()
@@ -70,7 +68,6 @@ class BottomSheetFragment() : BottomSheetDialogFragment() {
 
     fun transictionFragment(){
         this.requireActivity().supportFragmentManager.beginTransaction().apply {
-
             replace(R.id.flFragment, AddTaskFragment())
             addToBackStack(null)
             commit()

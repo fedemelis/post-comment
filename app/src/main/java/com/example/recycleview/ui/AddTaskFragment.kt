@@ -18,18 +18,13 @@ class AddTaskFragment : Fragment(R.layout.fragment_add_task) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-
-
         var adapter = PostAdapter(
             requireContext(),
             Common.myMutableListOfPost
         )
 
         btnConfirmAddNewTask.setOnClickListener{
-            //var recyclerFragment = RecyclerFragment()
-
             if (Common.modify){
-                //recyclerFragment.updateReceiver(Common.myMutableListOfPost[Common.currentPosition].idPost, etTaskTitle.text.toString(), etTaskDescription.text.toString())
                 postViewModel.updatePost(Common.myMutableListOfPost[Common.currentPosition].idPost, etTaskTitle.text.toString(), etTaskDescription.text.toString())
                 Common.myMutableListOfPost[Common.currentPosition] =
                     PostsDB(
@@ -42,7 +37,6 @@ class AddTaskFragment : Fragment(R.layout.fragment_add_task) {
             }
             else{
                 val randomNumber  = (10..100).random()
-                //recyclerFragment.insertReciver(PostsDB(randomNumber, etTaskTitle.text.toString(), etTaskDescription.text.toString()))
                 Common.myMutableListOfPost.add(PostsDB(randomNumber, etTaskTitle.text.toString(), etTaskDescription.text.toString()))
                 adapter.notifyDataSetChanged()
                 etTaskTitle.text.clear()

@@ -23,7 +23,6 @@ class PostAdapter(private val context: Context, private var postList: MutableLis
         )
     }
 
-
     override fun getItemCount(): Int {
         return postList.size
     }
@@ -61,7 +60,6 @@ class PostAdapter(private val context: Context, private var postList: MutableLis
     fun myListOfPosts() : MutableList<PostsDB>{
         return postList
     }
-
 
     fun deleteItemFromListAt(position: Int){
         myListOfPosts().removeAt(position)

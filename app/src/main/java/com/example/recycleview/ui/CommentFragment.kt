@@ -48,34 +48,7 @@ class CommentFragment : Fragment(R.layout.fragment_comments_recycler) {
             adapter.notifyDataSetChanged()
         })
 
-        /*if (Common.firstCom){
-            commentViewModel.insert(CommentsDB(1, "DemoCommenti1"))
-            commentViewModel.insert(CommentsDB(2, "DemoCommenti2"))
-            commentViewModel.insert(CommentsDB(3, "DemoCommenti3"))
-            commentViewModel.insert(CommentsDB(4, "DemoCommenti4"))
-            commentViewModel.insert(CommentsDB(5, "DemoCommenti5"))
-            commentViewModel.insert(CommentsDB(6, "DemoCommenti6"))
-            Common.firstCom = false
-        }*/
-
         commentViewModel.getCommentList()
-
-        //adapter.myListOfComments().add(commentsDB)
-
-        /*fun getAllComments() {
-            retrofitService.getCommentList(currentPosition.toString()).enqueue(object : retrofit2.Callback<MutableList<CommentsDB>>{
-                override fun onFailure(call: Call<MutableList<CommentsDB>>, t: Throwable) {
-
-                }
-                override fun onResponse(call: Call<MutableList<CommentsDB>>, response: Response<MutableList<CommentsDB>>) {
-                    adapter.myListOfComments().addAll(response.body() as MutableList<CommentsDB>)
-                    commentRecycler.adapter = adapter
-                    adapter.notifyDataSetChanged()
-                }
-            })
-        }
-
-        getAllComments()*/
 
         btnCam.setOnClickListener{
             val takePicture = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
