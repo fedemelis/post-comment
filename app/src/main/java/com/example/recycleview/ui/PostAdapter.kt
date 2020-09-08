@@ -14,18 +14,18 @@ import kotlinx.android.synthetic.main.todo_line.view.*
 
 
 
-class PostAdapter(private var context: Context, private var postList: MutableList<PostsDB>) : RecyclerView.Adapter<PostAdapter.PostViewHolder>() {
+class PostAdapter(private val postList: MutableList<PostsDB>, private val listener: AdapterClickListener) : RecyclerView.Adapter<PostAdapter.PostViewHolder>() {
+
+
 
     interface AdapterClickListener{
         fun showComments()
         fun showBottomSheet(position: Int)
     }
 
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PostViewHolder {
-        var itemView = LayoutInflater.from(context).inflate(R.layout.todo_line, parent, false)
-        var listener: AdapterClickListener
-        return PostViewHolder(itemView, this)
+        var itemView = LayoutInflater.from(parent.context).inflate(R.layout.todo_line, parent, false)
+        return PostViewHolder(itemView, listener)
     }
 
     override fun getItemCount(): Int {
@@ -46,7 +46,6 @@ class PostAdapter(private var context: Context, private var postList: MutableLis
             description = itemView.description
             itemView.setOnClickListener{
                 listener.showComments()
-
 
                 /*Common.currentPosition = adapterPosition
                 val commentFragment =

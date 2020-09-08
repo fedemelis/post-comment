@@ -17,19 +17,17 @@ import kotlinx.android.synthetic.main.fragment_recycler.*
 class RecyclerFragment : Fragment(R.layout.fragment_recycler), BottomSheetFragment.BottomSheetActionListener, PostAdapter.AdapterClickListener {
 
     private val postViewModel: PostViewModel by viewModels()
+    var myMutableListOfPost = arrayListOf<PostsDB>()
+    var adapter = PostAdapter(
+        myMutableListOfPost,
+        this
+    )
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        lateinit var layoutManager : LinearLayoutManager
-
-        layoutManager = LinearLayoutManager(context)
+        var layoutManager : LinearLayoutManager = LinearLayoutManager(context)
         todoList.layoutManager = layoutManager
-
-        var adapter = PostAdapter(
-            requireContext(),
-            Common.myMutableListOfPost
-        )
 
         postViewModel.allPosts.observe(viewLifecycleOwner, Observer {
             if(adapter.myListOfPosts().isEmpty()) {
@@ -61,24 +59,30 @@ class RecyclerFragment : Fragment(R.layout.fragment_recycler), BottomSheetFragme
     }
 
     fun changeFragment(position:Int) {
-            transictionFragment()
-            AddTaskFragment().editTask(position)
+        this.requireActivity().supportFragmentManager.beginTransaction().apply {
+            replace(R.id.flFragment, AddTaskFragment(adapter, myMutableListOfPost, position))
+            addToBackStack(null)
+            commit()
+        }
     }
 
     fun transictionFragment(){
         this.requireActivity().supportFragmentManager.beginTransaction().apply {
-            replace(R.id.flFragment, AddTaskFragment())
+            replace(R.id.flFragment, AddTaskFragment(adapter, myMutableListOfPost, 1000))
             addToBackStack(null)
             commit()
         }
     }
 
     override fun onClickModify(position: Int) {
-        transictionFragment()
+        changeFragment(position)
     }
 
     override fun onClickDelete(position: Int) {
-        postViewModel.delete(position)
+        postViewModel.delete(myMutableListOfPost[position].idPost)
+        adapter.myListOfPosts().removeAt(position)
+        adapter.notifyDataSetChanged()
+        postViewModel.getPostList()
     }
 
     override fun showComments() {

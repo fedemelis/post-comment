@@ -8,14 +8,6 @@ object Common {
 
     private const val BASE_URL = "https://jsonplaceholder.typicode.com/"
 
-    var modify = false
-    var currentPosition = 0
-    var currentTitle: String? = ""
-    var currentBody: String? = ""
-    var myMutableListOfPost : MutableList<PostsDB> = arrayListOf()
-    var firstCom = true
-    var firstPost = true
-
     val apiService: ApiService
     get() = RetrofitClientInstance.getClient(BASE_URL).create(ApiService::class.java)
 

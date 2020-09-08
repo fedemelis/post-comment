@@ -45,7 +45,7 @@ class BottomSheetFragment(private val position: Int, private val listener : Bott
 
         deleteLine.setOnClickListener{
             val deletingItemAlert = AlertDialog.Builder(context)
-            val dataPos = Common.currentPosition
+            val dataPos = position
             deletingItemAlert.setTitle("Sei sicuro?")
             deletingItemAlert.setMessage("Vuoi cancellare questo post?")
             deletingItemAlert.setPositiveButton("Si") { _: DialogInterface, _: Int ->

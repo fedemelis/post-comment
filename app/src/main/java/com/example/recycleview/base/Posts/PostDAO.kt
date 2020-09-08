@@ -18,7 +18,7 @@ interface   PostDAO {
     @Query("DELETE FROM post")
     suspend fun deleteAllPost()
 
-    @Query("SELECT * FROM post ORDER BY id")
+    @Query("SELECT * FROM post")
     fun getPostList():LiveData<List<PostsDB>>
 
     @Query("UPDATE post SET title = :newTitle, description = :newDescription WHERE id = :id")
