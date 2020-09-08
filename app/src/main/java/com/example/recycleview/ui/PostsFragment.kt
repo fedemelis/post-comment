@@ -5,16 +5,13 @@ import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.recycleview.R
-import com.example.recycleview.base.Comments.CommentsDB
 import com.example.recycleview.base.Posts.PostsDB
-import com.example.recycleview.common.Common
 import com.example.recycleview.model.PostViewModel
 import kotlinx.android.synthetic.main.fragment_recycler.*
 
-class RecyclerFragment : Fragment(R.layout.fragment_recycler), BottomSheetFragment.BottomSheetActionListener, PostAdapter.AdapterClickListener {
+class PostsFragment : Fragment(R.layout.fragment_recycler), BottomSheetFragment.BottomSheetActionListener, PostAdapter.AdapterClickListener {
 
     private val postViewModel: PostViewModel by viewModels()
     var myMutableListOfPost = arrayListOf<PostsDB>()
@@ -48,7 +45,7 @@ class RecyclerFragment : Fragment(R.layout.fragment_recycler), BottomSheetFragme
 
     fun changeFragment(position:Int) {
         this.requireActivity().supportFragmentManager.beginTransaction().apply {
-            replace(R.id.flFragment, AddTaskFragment(adapter, myMutableListOfPost, position))
+            replace(R.id.flFragment, AddOrModifyPostFragment(adapter, myMutableListOfPost, position))
             addToBackStack(null)
             commit()
         }
@@ -56,7 +53,7 @@ class RecyclerFragment : Fragment(R.layout.fragment_recycler), BottomSheetFragme
 
     fun transictionFragment(){
         this.requireActivity().supportFragmentManager.beginTransaction().apply {
-            replace(R.id.flFragment, AddTaskFragment(adapter, myMutableListOfPost, 1000))
+            replace(R.id.flFragment, AddOrModifyPostFragment(adapter, myMutableListOfPost, -1))
             addToBackStack(null)
             commit()
         }

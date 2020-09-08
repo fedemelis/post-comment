@@ -11,21 +11,20 @@ import com.example.recycleview.common.Common
 import com.example.recycleview.model.PostViewModel
 import kotlinx.android.synthetic.main.fragment_add_task.*
 
-class AddTaskFragment(private val adapter: PostAdapter, private var myMutableListOfPosts: MutableList<PostsDB>, private var position: Int) : Fragment(R.layout.fragment_add_task){
+class AddOrModifyPostFragment(private val adapter: PostAdapter, private var myMutableListOfPosts: MutableList<PostsDB>, private var position: Int) : Fragment(R.layout.fragment_add_task){
 
-    private var idPosition=-1
     private val postViewModel: PostViewModel by viewModels()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        if (position != 1000){
+        if (position != -1){
             etTaskTitle.setText(myMutableListOfPosts[position].postTitle)
             etTaskDescription.setText(myMutableListOfPosts[position].postBody)
         }
 
         btnConfirmAddNewTask.setOnClickListener{
-            if (position != 1000){
+            if (position != -1){
                 postViewModel.updatePost(myMutableListOfPosts[position].idPost, etTaskTitle.text.toString(), etTaskDescription.text.toString())
                 myMutableListOfPosts[position] =
                     PostsDB(
@@ -52,9 +51,5 @@ class AddTaskFragment(private val adapter: PostAdapter, private var myMutableLis
             etTaskDescription.text.clear()
             this.requireActivity().onBackPressed()
         }
-    }
-
-    fun editTask(position:Int){
-        idPosition=position
     }
 }
