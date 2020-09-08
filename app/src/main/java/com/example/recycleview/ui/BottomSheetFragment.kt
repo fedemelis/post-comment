@@ -33,12 +33,6 @@ class BottomSheetFragment(private val position: Int, private val listener : Bott
         super.onViewCreated(view, savedInstanceState)
 
         modifyLine.setOnClickListener(){
-            /*val positionForEdit =
-                Common.currentPosition
-            Common.currentTitle = adapter.myListOfPosts()[Common.currentPosition].postTitle
-            Common.currentBody = adapter.myListOfPosts()[Common.currentPosition].postBody
-            Common.modify = true
-            changeFragment(positionForEdit)*/
             listener.onClickModify(position)
             dismiss()
         }
@@ -49,9 +43,6 @@ class BottomSheetFragment(private val position: Int, private val listener : Bott
             deletingItemAlert.setTitle("Sei sicuro?")
             deletingItemAlert.setMessage("Vuoi cancellare questo post?")
             deletingItemAlert.setPositiveButton("Si") { _: DialogInterface, _: Int ->
-                /*postViewModel.delete(Common.myMutableListOfPost[dataPos].idPost)
-                adapter.myListOfPosts().removeAt(dataPos)
-                adapter.notifyDataSetChanged()*/
                 listener.onClickDelete(position)
             }
             deletingItemAlert.setNegativeButton("No") { _: DialogInterface, _: Int -> }

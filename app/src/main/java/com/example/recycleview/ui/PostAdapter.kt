@@ -46,20 +46,9 @@ class PostAdapter(private val postList: MutableList<PostsDB>, private val listen
             description = itemView.description
             itemView.setOnClickListener{
                 listener.showComments()
-
-                /*Common.currentPosition = adapterPosition
-                val commentFragment =
-                    CommentFragment()
-                (it.context as FragmentActivity).supportFragmentManager.beginTransaction().apply {
-                    replace(R.id.flFragment, commentFragment)
-                    addToBackStack(null)
-                    commit()
-                }*/
             }
             itemView.setOnLongClickListener{
                 listener.showBottomSheet(adapterPosition)
-                /*Common.currentPosition = adapterPosition
-                BottomSheetFragment().show((it.context as FragmentActivity).supportFragmentManager, "BottomSheetDialog")*/
                 return@setOnLongClickListener true
             }
         }
