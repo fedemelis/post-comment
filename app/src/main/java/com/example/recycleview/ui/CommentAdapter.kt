@@ -11,10 +11,10 @@ import com.example.recycleview.base.Comments.CommentsDB
 import kotlinx.android.synthetic.main.comment_line.view.*
 
 
-class CommentAdapter(private val context: Context, private var listOfComments: MutableList<CommentsDB>) : RecyclerView.Adapter<CommentAdapter.CommentViewHolder>() {
+class CommentAdapter(private var listOfComments: MutableList<CommentsDB>) : RecyclerView.Adapter<CommentAdapter.CommentViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CommentViewHolder {
-        var itemView = LayoutInflater.from(context).inflate(R.layout.comment_line, parent, false)
+        var itemView = LayoutInflater.from(parent.context).inflate(R.layout.comment_line, parent, false)
         return CommentViewHolder(
             itemView
         )
@@ -26,19 +26,14 @@ class CommentAdapter(private val context: Context, private var listOfComments: M
 
     override fun onBindViewHolder(holder: CommentViewHolder, position: Int) {
         holder.description.text = listOfComments[position].commentBody
-
-
     }
 
     class CommentViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView){
         var description : TextView
 
-
         init {
             description = itemView.comment
         }
-
-
     }
 
     fun myListOfComments() : MutableList<CommentsDB>{

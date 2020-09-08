@@ -46,18 +46,6 @@ class RecyclerFragment : Fragment(R.layout.fragment_recycler), BottomSheetFragme
         }
     }
 
-    fun updateReceiver(id: Int?, newTitle:String?, newDescription:String?){
-        postViewModel.updatePost(id, newTitle, newDescription)
-    }
-
-    fun insertReciver(post: PostsDB){
-        postViewModel.insert(post)
-    }
-
-    fun deleteReceiver(id: Int?){
-        postViewModel.delete(id)
-    }
-
     fun changeFragment(position:Int) {
         this.requireActivity().supportFragmentManager.beginTransaction().apply {
             replace(R.id.flFragment, AddTaskFragment(adapter, myMutableListOfPost, position))
