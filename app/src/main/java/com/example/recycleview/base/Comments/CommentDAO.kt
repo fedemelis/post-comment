@@ -18,7 +18,7 @@ interface   CommentDAO {
     @Query("DELETE FROM comment")
     suspend fun deleteAllComment()
 
-    @Query("SELECT * FROM comment ORDER BY id")
+    @Query("SELECT * FROM comment")
     fun getCommentList():LiveData<List<CommentsDB>>
 
     @Query("UPDATE comment SET body = :newBody WHERE id = :id")

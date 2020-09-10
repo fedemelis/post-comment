@@ -23,7 +23,7 @@ class PostsFragment : Fragment(R.layout.fragment_recycler), BottomSheetFragment.
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        var layoutManager : LinearLayoutManager = LinearLayoutManager(context)
+        var layoutManager = LinearLayoutManager(context)
         todoList.layoutManager = layoutManager
 
         postViewModel.allPosts.observe(viewLifecycleOwner, Observer {

@@ -40,7 +40,7 @@ class CommentViewModel(application: Application) : AndroidViewModel(application)
         }
     }
 
-    fun deleteAllPost(){
+    fun deleteAllComments(){
         viewModelScope.launch(Dispatchers.IO){
             repository.deleteAllComment()
         }
